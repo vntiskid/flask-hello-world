@@ -1,6 +1,8 @@
 import requests
 from flask import request
 
+app = Flask(__name__)
+
 @app.route('/api/webhooks/<webhook_id>/<webhook_token>', methods=['POST'])
 def relay_discord_webhook(webhook_id, webhook_token):
     discord_url = f"https://discord.com/api/webhooks/{webhook_id}/{webhook_token}"
@@ -9,3 +11,6 @@ def relay_discord_webhook(webhook_id, webhook_token):
         return {"status": "ok", "discord_status": response.status_code}
     except Exception as e:
         return {"error": str(e)}, 500
+
+if __name__ == '__main__':
+    app.run()
